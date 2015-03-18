@@ -5,16 +5,22 @@
   	<property name="build" location="build"/>
 	<property name="release"  location="release"/>
 	<property name="doc"  location="doc"/>	
+	<property name="lib"     value="lib"/>
+	
 	
   <target name="init">
     <mkdir dir="${build}"/>
     <mkdir dir="${release}"/>
     <mkdir dir="${doc}"/>
   </target>
+  
+  	<path id="classpath">
+        <fileset dir="${lib}" includes="**/*.jar"/>
+    </path>
 
   <target name="compile" depends="init"
         description="compile the source " >
-    <javac srcdir="${src}" destdir="${build}"/>
+    <javac srcdir="${src}" destdir="${build}" classpathref="classpath"/>
   </target>
 
   <target name="release" depends="compile"
