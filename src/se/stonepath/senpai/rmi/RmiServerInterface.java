@@ -23,10 +23,10 @@ public interface RmiServerInterface extends Remote{
 	}
 	
 	public static void bindFromSenpaiAppender(Remote remote) throws RemoteException, MalformedURLException{
-		RmiServerInterface.bindFromSenpaiAppender("senpai",remote);
+		RmiServerInterface.bindFromSenpaiAppender(Logger.getRootLogger(),"senpai",remote);
 	}
-	public static void bindFromSenpaiAppender(String appenderName,Remote remote) throws RemoteException, MalformedURLException{
-		SenpaiAppender senpaiAppender = (SenpaiAppender)Logger.getRootLogger().getAppender(appenderName);
+	public static void bindFromSenpaiAppender(Logger logger, String appenderName,Remote remote) throws RemoteException, MalformedURLException{
+		SenpaiAppender senpaiAppender = (SenpaiAppender)logger.getAppender(appenderName);
 		Naming.rebind(senpaiAppender.getRmiUrl(), remote);
 	}
 }
