@@ -14,17 +14,14 @@ import se.stonepath.senpai.log4j.SenpaiAppender;
 public interface RmiServerInterface extends Remote{
 
 	
-	public static void startServer(Remote remote) throws RemoteException, InstantiationException, IllegalAccessException, MalformedURLException{
-		startServer(1099,remote);
+	public static void startServer(Logger logger, String appenderName,Remote remote) throws RemoteException, InstantiationException, IllegalAccessException, MalformedURLException{
+		startServer(1099,logger,appenderName, remote);
 	}
-	public static void startServer(int port, Remote remote) throws RemoteException, InstantiationException, IllegalAccessException, MalformedURLException{
+	public static void startServer(int port, Logger logger, String appenderName, Remote remote) throws RemoteException, InstantiationException, IllegalAccessException, MalformedURLException{
 		LocateRegistry.createRegistry(port);
-		RmiServerInterface.bindFromSenpaiAppender(remote);
+		RmiServerInterface.bindFromSenpaiAppender(logger, appenderName, remote);
 	}
 	
-	public static void bindFromSenpaiAppender(Remote remote) throws RemoteException, MalformedURLException{
-		RmiServerInterface.bindFromSenpaiAppender(Logger.getRootLogger(),"senpai",remote);
-	}
 	public static void bindFromSenpaiAppender(Logger logger, String appenderName,Remote remote) throws RemoteException, MalformedURLException{
 		SenpaiAppender senpaiAppender = (SenpaiAppender)logger.getAppender(appenderName);
 		Naming.rebind(senpaiAppender.getRmiUrl(), remote);
