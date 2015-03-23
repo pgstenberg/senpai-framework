@@ -19,12 +19,8 @@ public interface RmiServerInterface extends Remote{
 	}
 	public static void startServer(int port, Logger logger, String appenderName, Remote remote) throws RemoteException, InstantiationException, IllegalAccessException, MalformedURLException{
 		
-		try{
-			LocateRegistry.getRegistry(port);
-		}catch(RemoteException e){
-			LocateRegistry.createRegistry(port);
-		}
-		
+		LocateRegistry.createRegistry(port);
+
 		RmiServerInterface.bindFromSenpaiAppender(logger, appenderName, remote);
 	}
 	
