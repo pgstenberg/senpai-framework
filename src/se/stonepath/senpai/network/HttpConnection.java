@@ -16,6 +16,8 @@ public class HttpConnection {
 	public final static String API_PATH_LIST = API_PATH + "/list";
 	public final static String API_PATH_STATUS = API_PATH + "/status";
 	
+	public final static int CONNNECTION_TIMEOUT = 1000;
+	
 	
 	public static boolean checkUrl(String targetUrl){
 		try{
@@ -53,6 +55,8 @@ public class HttpConnection {
 		 
 		URL obj = new URL(urlBuilder.toString());
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setReadTimeout(CONNNECTION_TIMEOUT);
+		con.setConnectTimeout(CONNNECTION_TIMEOUT);
  
 		// optional default is GET
 		con.setRequestMethod("GET");
@@ -79,6 +83,8 @@ public class HttpConnection {
 	      //Create connection
 	      url = new URL(targetURL);
 	      connection = (HttpURLConnection)url.openConnection();
+	      connection.setReadTimeout(CONNNECTION_TIMEOUT);
+	      connection.setConnectTimeout(CONNNECTION_TIMEOUT);
 	      connection.setRequestMethod("POST");
 	      connection.setRequestProperty("Content-Type", 
 	           "application/json; charset=utf-8");
